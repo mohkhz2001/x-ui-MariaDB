@@ -3,8 +3,8 @@ package database
 import (
 	"gorm.io/driver/mysql"
     "gorm.io/gorm"
-	"gorm.io/gorm/logger"
-	"x-ui/config"
+	_ "gorm.io/gorm/logger"
+	_ "x-ui/config"
 	"x-ui/database/model"
 )
 
@@ -39,29 +39,12 @@ func initSetting() error {
 }
 
 func InitDB(dbPath string) error {
-	dsn := "xui:1234@tcp(127.0.0.1:3306)/xuiSystem"
-	db := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
-	c := &gorm.Config{
-		Logger: gormLogger,
-	}
-	db, err = gorm.Open(sqlite.Open(dbPath), c)
-	if err != nil {
-		return err
-	}
-
-	err = initUser()
-	if err != nil {
-		return err
-	}
-	err = initInbound()
-	if err != nil {
-		return err
-	}
-	err = initSetting()
-	if err != nil {
-		return err
-	}
+	dsn := "x_ui_admin:admin@tcp(127.0.0.1:3306)/x_ui"
+	db, _ = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	
+    initUser()
+    initInbound()
+    initSetting()
 
 	return nil
 }
