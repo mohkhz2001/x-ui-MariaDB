@@ -91,6 +91,8 @@ config_mariaDB(){
 
     read -p "${yellow}Let's start config MariaDB , press enter${plain}" enter
 
+    https://raw.githubusercontent.com/mohkhz2001/x-ui-MariaDB/MariaDB/config_mariaDB.sh
+
     sudo bash ./config_mariaDB.sh
 
     createDB
@@ -107,7 +109,6 @@ createDB(){ # default: name = x_ui , user = x_ui_admin , password = admin
 
 #This function will be called when user installed x-ui out of sercurity
 config_after_install() {
-    db_port = 3306
     echo -e "${yellow}For security reasons, port and account passwords must be changed after installation/update${plain}"
     read -p "Confirm to continue? [y/n]": config_confirm
     if [[ x"${config_confirm}" == x"y" || x"${config_confirm}" == x"Y" ]]; then
@@ -161,13 +162,14 @@ install_x-ui() {
 
     tar zxvf x-ui-linux.tar.gz
     rm x-ui-linux.tar.gz -f
-    cd x-ui-linux
+    cd x-ui
     chmod +x x-ui bin/xray-linux-${arch}
     cp -f x-ui.service /etc/systemd/system/
-    wget --no-check-certificate -O /usr/bin/x-ui https://raw.githubusercontent.com/vaxilu/x-ui/main/x-ui.sh
+    #wget --no-check-certificate -O /usr/bin/x-ui https://raw.githubusercontent.com/vaxilu/x-ui/main/x-ui.sh
+    wget --no-check-certificate -O /usr/bin/x-ui https://raw.githubusercontent.com/mohkhz2001/x-ui-MariaDB/mariaDB/x-ui.sh
     chmod +x /usr/local/x-ui/x-ui.sh
     chmod +x /usr/bin/x-ui
-    config_after_install
+    #config_after_install
     #echo -e "如果是全新安装，默认网页端口为 ${green}54321${plain}，用户名和密码默认都是 ${green}admin${plain}"
     #echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保 54321 端口已放行${plain}"
     #    echo -e "若想将 54321 修改为其它端口，输入 x-ui 命令进行修改，同样也要确保你修改的端口也是放行的"
