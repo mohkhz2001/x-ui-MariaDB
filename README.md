@@ -1,4 +1,4 @@
-# Optinal
+# Option
 to use the x-ui with MariaDB version change the branch to `mariaDB` or click the link below
 >  https://github.com/mohkhz2001/x-ui-MariaDB/tree/mariaDB
 
